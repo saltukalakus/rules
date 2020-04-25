@@ -27,9 +27,10 @@ describe(ruleName, () => {
       }
     }
   };
+  let global = {};
 
   beforeEach(() => {
-    rule = loadRule(ruleName, { auth0 });
+    rule = loadRule(ruleName, { auth0, global });
   });
 
   describe('should do nothing', () => {

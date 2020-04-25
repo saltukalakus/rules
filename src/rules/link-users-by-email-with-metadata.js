@@ -56,11 +56,11 @@ function linkUsersByEmailWithMetadata(user, context, callback) {
         return sourceValue.concat(objectValue);
       }
     };
-    const mergedUserMetadata = _.merge({}, user.user_metadata, originalUser.user_metadata, mergeCustomizer);
-    const mergedAppMetadata = _.merge({}, user.app_metadata, originalUser.app_metadata, mergeCustomizer);
+    global.mergedUserMetadata = _.merge({}, user.user_metadata, originalUser.user_metadata, mergeCustomizer);
+    global.mergedAppMetadata = _.merge({}, user.app_metadata, originalUser.app_metadata, mergeCustomizer);
     
-    auth0.users.updateAppMetadata(originalUser.user_id, mergedAppMetadata)
-    .then(auth0.users.updateUserMetadata(originalUser.user_id, mergedUserMetadata))
+    auth0.users.updateAppMetadata(originalUser.user_id, global.mergedAppMetadata)
+    .then(auth0.users.updateUserMetadata(originalUser.user_id, global.mergedUserMetadata))
     .then(function() {
       request.post({
         url: userApiUrl + '/' + originalUser.user_id + '/identities',
